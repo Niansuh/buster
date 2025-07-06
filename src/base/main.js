@@ -19,7 +19,8 @@ function main() {
 
   let solverWorking = false;
   let solverButton = null;
-  let autoClicked = false;
+  let solverAutoClicked = false;
+  let checkboxAutoClicked = false;
 
   function setSolverState({working = true} = {}) {
     solverWorking = working;
@@ -59,6 +60,16 @@ function main() {
       return;
     }
 
+    const checkboxBorder = document.querySelector('.recaptcha-checkbox-border');
+    if (checkboxBorder && !checkboxAutoClicked) {
+      checkboxAutoClicked = true;
+      setTimeout(() => {
+        if (document.contains(checkboxBorder)) {
+          checkboxBorder.click();
+        }
+      }, 100);
+    }
+
     const helpButton = document.querySelector('#recaptcha-help-button');
     if (helpButton) {
       helpButton.remove();
@@ -93,8 +104,8 @@ function main() {
 
       shadow.appendChild(solverButton);
 
-      if (!autoClicked) {
-        autoClicked = true;
+      if (!solverAutoClicked) {
+        solverAutoClicked = true;
         setTimeout(() => {
           if (solverButton && !solverWorking) {
             solverButton.click();
